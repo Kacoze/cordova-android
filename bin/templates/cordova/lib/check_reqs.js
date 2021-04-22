@@ -148,7 +148,7 @@ module.exports.check_java = async function () {
         );
     }
 
-    return javaVersion;
+    return EXPECTED_JAVA_VERSION;
 };
 
 // Returns a promise.
