@@ -43,7 +43,13 @@ const java = {
         // Java <= 8 writes version info to stderr, Java >= 9 to stdout
         let version = null;
         try {
-            version = (await execa('javac', ['-version'], { all: true })).all;
+            const javacOutput = (await execa('javac', ['-version'], { all: true })).all;
+            const match = /javac\s+([\d.]+)/i.exec(javacOutput);
+            if (match && match.length > 0) {
+                version = match[1];
+            } else {
+                version = javacOutput;
+            }
         } catch (ex) {
             events.emit('verbose', ex.shortMessage);
 
